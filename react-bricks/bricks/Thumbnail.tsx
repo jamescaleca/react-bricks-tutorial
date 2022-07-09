@@ -1,9 +1,18 @@
 import React from 'react'
 import { types, Text, RichText, Image } from 'react-bricks/frontend'
 
-const Thumbnail: types.Brick = () => {
+interface ThumbnailProps {
+  hasShadow: boolean
+  bgColor: types.IColor
+}
+
+const Thumbnail: types.Brick<ThumbnailProps> = ({ hasShadow, bgColor }) => {
   return (
-    <div className="my-6 mx-6 p-6 text-center w-1/3 border rounded-lg shadow-xl">
+    <div 
+      className={`my-6 mx-6 p-6 text-center w-1/3 border rounded-lg ${
+        hasShadow ? 'shadow-xl' : ''
+      } ${bgColor?.className}`}
+    >
         <Image
             propName="image"
             alt="Fallback alt tag"
@@ -45,37 +54,42 @@ Thumbnail.schema = {
   name: 'thumbnail',
   label: 'Thumbnail',
   getDefaultProps: () => ({
-    title: [
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "Image goes here"
-          }
-        ]
-      }
-    ],
-    description: [
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "Lorem ipsum dolor sit amet."
-          }
-        ]
-      }
-    ],
-    image: {
-      src: "https://images.reactbricks.com/original/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a.jpg",
-      placeholderSrc: "https://images.reactbricks.com/placeholder/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a.jpg",
-      srcSet: "https://images.reactbricks.com/src_set/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a-400.jpg 400w,\nhttps://images.reactbricks.com/src_set/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a-300.jpg 300w,\nhttps://images.reactbricks.com/src_set/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a-200.jpg 200w,\nhttps://images.reactbricks.com/src_set/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a-100.jpg 100w,\nhttps://images.reactbricks.com/src_set/94d929ca-3a17-4e67-bd9b-5aeac7c46c5a-50.jpg 50w",
-      width: 4800,
-      height: 2700,
-      alt: "unsplash img",
-      seoName: ""
-    }
+    title: 'Hello world!',
+    description: 'Lorem ipsum dolor sit amet.',
+    hasShadow: true,
+    bgColor: { color: '#ffffff', className: 'bg-white' }
   }),
-  sideEditProps: [],
+  sideEditProps: [
+    {
+      groupName: 'Image',
+      defaultOpen: true,
+      props: [
+        {
+          name: 'hasShadow',
+          label: 'Shadow',
+          type: types.SideEditPropType.Boolean,
+        },
+        {
+          name: 'bgColor',
+          label: 'Background',
+          type: types.SideEditPropType.Select,
+          selectOptions: {
+            display: types.OptionsDisplay.Color,
+            options: [
+              {
+                label: 'White',
+                value: { color: '#ffffff', className: 'bg-white' },
+              },
+              {
+                label: 'Light blue',
+                value: { color: '#eff6ff', className: 'bg-blue-50' },
+              },
+            ],
+          },
+        },
+      ]
+    }
+  ],
 }
 
 export default Thumbnail
