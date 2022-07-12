@@ -6,46 +6,51 @@ interface ThumbnailProps {
   bgColor: types.IColor
 }
 
-const Thumbnail: types.Brick<ThumbnailProps> = ({ hasShadow, bgColor }) => {
+const Thumbnail: types.Brick<ThumbnailProps> = ({ 
+  hasShadow, 
+  bgColor,
+  ...rest
+}) => {
   return (
     <div 
+      {...rest}
       className={`my-6 mx-6 p-6 text-center w-1/3 border rounded-lg ${
         hasShadow ? 'shadow-xl' : ''
       } ${bgColor?.className}`}
     >
-        <Image
-            propName="image"
-            alt="Fallback alt tag"
-            maxWidth={200}
-            imageClassName="mb-6"   
-        />
-        <Text 
-            propName="title"
-            renderBlock={({ children }) => <h1 className="text-2xl font-bold">{children}</h1>}
-            placeholder="Type a title..."
-        />
+      <Image
+        propName="image"
+        alt="Fallback alt tag"
+        maxWidth={200}
+        imageClassName="mb-6"   
+      />
+      <Text 
+        propName="title"
+        renderBlock={({ children }) => <h1 className="text-2xl font-bold">{children}</h1>}
+        placeholder="Type a title..."
+      />
 
-        <RichText
-            propName="description"
-            renderBlock={({ children }) => (
-                <p className="text-lg text-gray-500">{children}</p>
-            )}
-            placeholder="Type a description"
-            allowedFeatures={[
-                types.RichTextFeatures.Bold,
-                types.RichTextFeatures.Highlight,
-                types.RichTextFeatures.Italic,
-                types.RichTextFeatures.Code,
-                types.RichTextFeatures.Link,
-                types.RichTextFeatures.OrderedList,
-                types.RichTextFeatures.UnorderedList
-            ]}
-            renderHighlight={({ children }) => (
-                <span className="px-1 rounded bg-blue-200 text-blue-900">
-                  {children}
-                </span>
-            )}
-        />
+      <RichText
+        propName="description"
+        renderBlock={({ children }) => (
+          <p className="text-lg text-gray-500">{children}</p>
+        )}
+        placeholder="Type a description"
+        allowedFeatures={[
+          types.RichTextFeatures.Bold,
+          types.RichTextFeatures.Highlight,
+          types.RichTextFeatures.Italic,
+          types.RichTextFeatures.Code,
+          types.RichTextFeatures.Link,
+          types.RichTextFeatures.OrderedList,
+          types.RichTextFeatures.UnorderedList
+        ]}
+        renderHighlight={({ children }) => (
+            <span className="px-1 rounded bg-blue-200 text-blue-900">
+              {children}
+            </span>
+        )}
+      />
     </div>
   )
 }
@@ -88,7 +93,13 @@ Thumbnail.schema = {
           },
         },
       ]
-    }
+    },
+    {
+      name: 'fontSize',
+      label: 'Font Size',
+      type: types.SideEditPropType.Number,
+      validate: value => value >= 12 && value <= 32
+    },
   ],
 }
 

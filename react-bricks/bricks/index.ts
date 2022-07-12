@@ -3,12 +3,14 @@ import website from 'react-bricks-ui/website'
 import blog from 'react-bricks-ui/blog'
 import HeroUnit from './MyHeroUnit'
 import Thumbnail from './Thumbnail'
+import Gallery from './Gallery'
 
 const bricks: types.Brick<any>[] = [
   ...website, // React Bricks UI
   ...blog,
   HeroUnit,
-  Thumbnail // Example custom brick
+  Thumbnail,
+  Gallery // Example custom brick
   // Put here your other bricks...
 ]
 
